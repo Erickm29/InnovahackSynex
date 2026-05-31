@@ -17,7 +17,7 @@ export function AppShell({ user, children }: AppShellProps) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <div className="fixed inset-y-0 left-0 z-40 hidden w-[var(--sidebar-width)] lg:block">
+      <div className="fixed inset-y-0 left-0 z-40 hidden w-[var(--sidebar-width)] lg:block print:hidden">
         <Sidebar user={user} />
       </div>
 
@@ -34,9 +34,11 @@ export function AppShell({ user, children }: AppShellProps) {
         </SheetContent>
       </Sheet>
 
-      <div className="flex min-h-screen flex-1 flex-col lg:pl-[var(--sidebar-width)]">
-        <Topbar user={user} onMenuClick={() => setMobileOpen(true)} />
-        <main className="flex-1">{children}</main>
+      <div className="flex min-h-screen flex-1 flex-col lg:pl-[var(--sidebar-width)] print:pl-0 print:min-h-0">
+        <div className="print:hidden">
+          <Topbar user={user} onMenuClick={() => setMobileOpen(true)} />
+        </div>
+        <main className="flex-1 print:p-0">{children}</main>
       </div>
     </div>
   );

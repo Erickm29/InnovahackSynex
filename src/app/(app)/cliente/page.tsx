@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
-import { Leaf, Recycle, TreePine, Zap, Droplets, CheckCircle2, Clock } from "lucide-react";
+import Link from "next/link";
+import { Leaf, Recycle, TreePine, Zap, Droplets, CheckCircle2, Clock, Sparkles } from "lucide-react";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -34,7 +35,15 @@ export default async function ClienteImpactoPage() {
       <PageHeader
         title="Tu impacto ambiental"
         description={`Resultado del reciclaje de ${session.afiliadoNombre}, traducido a indicadores de sostenibilidad.`}
-      />
+      >
+        <Link
+          href="/sostenibilidad"
+          className="inline-flex items-center gap-1.5 rounded-2xl bg-emerald-50 border border-emerald-200/50 px-4.5 py-2 text-xs font-bold text-emerald-700 hover:bg-emerald-100 hover:border-emerald-300 transition-all shadow-sm"
+        >
+          <Sparkles className="size-3.5 text-emerald-600" />
+          <span>Ver Dashboard de Sostenibilidad</span>
+        </Link>
+      </PageHeader>
 
       {/* KPIs rápidos de estado */}
       {resumen && (

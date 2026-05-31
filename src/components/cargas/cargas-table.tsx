@@ -99,6 +99,7 @@ export function CargasTable({
                 <TableRow className="bg-muted/40 hover:bg-muted/40">
                   <TableHead className="pl-6">Fecha</TableHead>
                   <TableHead>Empresa</TableHead>
+                  <TableHead>Material</TableHead>
                   <TableHead>Recolector ID</TableHead>
                   <TableHead className="text-right">Peso (kg)</TableHead>
                   <TableHead>Estado</TableHead>
@@ -108,7 +109,7 @@ export function CargasTable({
               <TableBody>
                 {filtered.length === 0 ? (
                   <TableRow className="hover:bg-transparent">
-                    <TableCell colSpan={6}>
+                    <TableCell colSpan={7}>
                       <EmptyState
                         message="No hay cargas para mostrar"
                         description={
@@ -130,6 +131,9 @@ export function CargasTable({
                         {formatDate(carga.fecha)}
                       </TableCell>
                       <TableCell>{carga.empresa}</TableCell>
+                      <TableCell className="max-w-[200px] truncate text-zinc-700 font-medium" title={carga.material ?? ""}>
+                        {carga.material ?? "—"}
+                      </TableCell>
                       <TableCell className="font-mono text-xs text-muted-foreground">
                         {carga.recolector_id}
                       </TableCell>

@@ -31,8 +31,8 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const session = readSession(request);
 
-  if (pathname.startsWith("/login")) {
-    if (session) {
+  if (pathname.startsWith("/login") || pathname.startsWith("/sostenibilidad")) {
+    if (pathname.startsWith("/login") && session) {
       const home =
         session.role === "cliente" ? "/cliente" : "/";
       return NextResponse.redirect(new URL(home, request.url));

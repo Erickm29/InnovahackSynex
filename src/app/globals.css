@@ -67,7 +67,7 @@
   --fundares-reject: #d97757;
 
   /* Semantic tokens */
-  --background: #f5f6f5;
+  --background: #f8f9fa;
   --foreground: #1f2937;
   --card: #ffffff;
   --card-foreground: #1f2937;
@@ -139,17 +139,23 @@
   }
 
   .fundares-card {
-    @apply rounded-2xl border border-border bg-card;
-    box-shadow: var(--shadow-fundares);
+    @apply rounded-2xl border border-border/50 bg-card transition-all duration-300 ease-out;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  }
+
+  .fundares-card:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
   }
 
   .fundares-kpi {
-    @apply rounded-2xl border border-border bg-card p-6 transition-shadow duration-200;
-    box-shadow: var(--shadow-fundares);
+    @apply rounded-2xl border border-border/50 bg-card p-6 transition-all duration-300 ease-out;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
   }
 
   .fundares-kpi:hover {
-    box-shadow: var(--shadow-fundares-lg);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(44, 102, 103, 0.04);
+    @apply border-primary/25 bg-gradient-to-b from-card to-secondary/20;
   }
 
   .fundares-input {
@@ -168,3 +174,60 @@
     @apply mx-auto w-full max-w-7xl px-6 py-10 lg:px-10;
   }
 }
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .fundares-page {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .fundares-card,
+  .fundares-kpi {
+    border: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .fundares-kpi:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  /* Evitar saltos de página a mitad de filas de tabla o gráficos */
+  tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  thead {
+    display: table-header-group !important;
+  }
+
+  /* Ocultar elementos interactivos o decorativos del navegador al imprimir */
+  .print-hidden,
+  button,
+  a[role="button"] {
+    display: none !important;
+  }
+
+  /* Asegurar que las imágenes e iconos se impriman correctamente */
+  img,
+  svg {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+

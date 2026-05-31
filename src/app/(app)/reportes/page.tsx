@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/table";
 import { getCargas, getWeightComparisonData } from "@/lib/actions/cargas";
 import { getResumenTodosAfiliados } from "@/lib/actions/afiliados";
+import { ExportPDFButton } from "@/components/dashboard/export-pdf-button";
 
 function formatFecha(value: string) {
   try {
@@ -39,10 +40,49 @@ export default async function ReportesPage() {
 
   return (
     <div className="fundares-page">
-      <PageHeader
-        title="Reportes"
-        description="Resumen global de validaciones, comparativa por empresa y estado de recolecciones."
-      />
+      <div className="print:hidden">
+        <PageHeader
+          title="Reportes"
+          description="Resumen global de validaciones, comparativa por empresa y estado de recolecciones."
+        >
+          <ExportPDFButton />
+        </PageHeader>
+      </div>
+
+      {/* Cabecera exclusiva para la impresión en PDF */}
+      <div className="hidden print:flex flex-col gap-4 border-b pb-6 mb-8">
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl font-bold text-[#2c6667]">FUNDARES BOLIVIA</h1>
+            <p className="text-xs text-muted-foreground mt-1">Fundación para el Reciclaje y Desarrollo Sostenible</p>
+          </div>
+          <div className="text-right">
+            <span className="text-xs font-semibold px-2.5 py-1 rounded bg-[#e8f3ea] text-[#2f5d35]">
+              Documento Oficial
+            </span>
+            <p className="text-[10px] text-muted-foreground mt-2">
+              ID Reporte: REP-{new Date().getFullYear()}-{Math.floor(Math.random() * 90000) + 10000}
+            </p>
+          </div>
+        </div>
+        <div className="mt-4">
+          <h2 className="text-xl font-bold tracking-tight text-foreground">
+            Reporte Consolidado de Sostenibilidad y Trazabilidad de Cargas
+          </h2>
+          <div className="grid grid-cols-3 gap-4 mt-3 text-xs text-muted-foreground">
+            <div>
+              <span className="font-semibold text-foreground">Fecha de emisión:</span>{" "}
+              {format(new Date(), "dd 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}
+            </div>
+            <div>
+              <span className="font-semibold text-foreground">Emisor:</span> Validador de Sostenibilidad FUNDARES
+            </div>
+            <div>
+              <span className="font-semibold text-foreground">Fuente de datos:</span> Supabase Live DB
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* KPIs globales */}
       <div className="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -166,6 +206,22 @@ export default async function ReportesPage() {
           </Table>
         </CardContent>
       </Card>
+
+      {/* Bloque de firmas exclusivo para la impresión en PDF */}
+      <div className="hidden print:flex justify-between items-center mt-16 pt-12 border-t border-dashed border-gray-300">
+        <div className="flex flex-col items-center w-1/3">
+          <div className="w-full border-t border-gray-400 mt-8 pt-2 text-center text-xs">
+            <p className="font-semibold text-foreground">Validador de Operaciones</p>
+            <p className="text-muted-foreground">Fundación FUNDARES</p>
+          </div>
+        </div>
+        <div className="flex flex-col items-center w-1/3">
+          <div className="w-full border-t border-gray-400 mt-8 pt-2 text-center text-xs">
+            <p className="font-semibold text-foreground">Coordinador de Sostenibilidad</p>
+            <p className="text-muted-foreground">Director de Impacto ESG</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
